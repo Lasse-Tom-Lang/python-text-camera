@@ -1,8 +1,26 @@
 import cv2
 import PySimpleGUI as sg
 
+def checkCameras() -> list[int]:
+  """
+    Searches for all open camera ports
+  """
+  is_working = True
+  dev_port = 0
+  working_ports = []
+  while is_working:
+    camera = cv2.VideoCapture(dev_port)
+    if not camera.isOpened():
+      is_working = False
+    else:
+      is_reading = camera.read()
+      if is_reading:
+        working_ports.append(dev_port)
+    dev_port +=1
+  return working_ports
 
 def Main():
+  workingPorts = checkCameras()
   letters = [" ", ".", "'", ",", ":", "^", ";", "-", "+", "*", "=", "O", "0", "%", "$", "§", "?", "#"]
 
   layout = [
@@ -54,6 +72,17 @@ def Main():
         disable_number_display=True,
         background_color="black",
         trough_color="white"
+      ),
+      sg.Combo(
+        workingPorts,
+        default_value=0,
+        background_color="black",
+        text_color="white",
+        button_background_color="black",
+        button_arrow_color="white",
+        change_submits=True,
+        key="-ACTIVECAMERA-",
+        font="Arial 12"
       )
     ]
   ]
@@ -107,6 +136,12 @@ def Main():
         window["-TEXT-"].update(text)
       except:
         continue
+
+    if event == "-ACTIVECAMERA-":
+      try: 
+        cam = cv2.VideoCapture(values["-ACTIVECAMERA-"])
+      except: 
+        cam = cv2.VideoCapture(0)
 
     if values["-CAMERAACTIV-"]:
 
