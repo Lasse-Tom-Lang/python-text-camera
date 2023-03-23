@@ -1,6 +1,6 @@
 # Python Text Camera
 
-![ExampleImage](ExampleImage.png)
+![ExampleImage](docs/ExampleImage.png)
 
 # Functionality
 

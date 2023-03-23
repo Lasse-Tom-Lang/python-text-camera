@@ -21,7 +21,7 @@ def checkCameras() -> list[int]:
 
 def Main():
   workingPorts = checkCameras()
-  letters = [" ", ".", "'", ",", ":", "^", ";", "-", "+", "*", "=", "O", "0", "%", "$", "§", "?", "#"]
+  letters = "       .'`^\",:;Il!i><~+_-?][}{1)(|\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
 
   layout = [
     [
@@ -118,7 +118,7 @@ def Main():
     for lines in imageGray:
       output = ""
       for pixels in lines:
-        output += letters[pixels // 15]
+        output += letters[pixels // 4]
       imageChars += output + "\n"
     return imageChars
 
